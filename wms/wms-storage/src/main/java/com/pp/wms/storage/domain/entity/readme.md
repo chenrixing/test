@@ -1,0 +1,2 @@
+实体类
+Entity类必须与数据库表一一对应，如Book，Computer

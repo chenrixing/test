@@ -1,0 +1,39 @@
+server:
+  port: 8101
+spring:
+  application:
+    name: wms-storage
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: sys-config  # config服务端在eureka中心的注册名
+      name: swagger, pp         # 配置文件的前半部分(完整文件名类似Hudic-config-dev.properties)
+      profile: dev              # 配置文件的后半部分
+      label: master             # (云端)仓库的branch(分支)
+  datasource:
+    url: jdbc:mysql://localhost:3306/wms?characterEncoding=utf8&useSSL=false&serverTimezone=GMT
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${spring.cloud.client.ip-address}:8001/eureka/
+  instance:
+    status-page-url: http://${spring.cloud.client.ip-address}:${server.port}/swagger-ui.html
+mybatis:
+  type-aliases-package: com.pp.wms.storage.domain # 实体类
+  mapper-locations: classpath:mybatis/mapper/*.xml # mapper.xml
+  #  Mapper接口的位置配置在启动类的@MapperScan()中，也可以分别在每个Mapper接口上声明@Mapper
+
+#  swagger界面的信息配置
+#swagger:
+#  api-info:
+#    title: PP-WMS-STORAGE
+#    description: PP-仓储系统-库存
+#    version: 0.0.1
+#    contact:
+#      name: pp
+#      url: www.pp.com
+#      email: pp@pp.com

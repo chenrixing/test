@@ -1,0 +1,17 @@
+server:
+  port: 8002
+spring:
+  application:
+    name: sys-config
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/Hudic/Configuration/          # 存放了配置文件的仓库
+          search-paths: PP                                      # 仓库下配置文件所处的文件夹
+          username:                                             # git仓库的账号
+          password:                                             # git仓库的密码
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${spring.cloud.client.ip-address}:8001/eureka/
