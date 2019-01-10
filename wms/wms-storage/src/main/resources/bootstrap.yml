@@ -1,5 +1,9 @@
 server:
   port: 8101
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${spring.cloud.client.ip-address}:8001/eureka/  # 默认注册的eureka中心地址必须在启动时就指定，不可通过config server端获取，因为调用server的前提就是要在同一个eureka中心注册
 spring:
   application:
     name: wms-storage
@@ -7,26 +11,37 @@ spring:
     config:
       discovery:
         enabled: true
-        service-id: sys-config  # config服务端在eureka中心的注册名
-      name: swagger, pp         # 配置文件的前半部分(完整文件名类似Hudic-config-dev.properties)
-      profile: dev              # 配置文件的后半部分
-      label: master             # (云端)仓库的branch(分支)
-  datasource:
-    url: jdbc:mysql://localhost:3306/wms?characterEncoding=utf8&useSSL=false&serverTimezone=GMT
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: root
-eureka:
-  client:
-    service-url:
-      defaultZone: http://${spring.cloud.client.ip-address}:8001/eureka/
-  instance:
-    status-page-url: http://${spring.cloud.client.ip-address}:${server.port}/swagger-ui.html
+        service-id: sys-config                        # config服务端在eureka中心的注册名
+      name: swagger, mysql                            # 配置文件的前半部分(完整文件名类似Hudic-config-dev.properties)
+      profile: dev                                    # 配置文件的后半部分
+      label: master                                   # (云端)仓库的branch(分支)
 mybatis:
-  type-aliases-package: com.pp.wms.storage.domain # 实体类
-  mapper-locations: classpath:mybatis/mapper/*.xml # mapper.xml
-  #  Mapper接口的位置配置在启动类的@MapperScan()中，也可以分别在每个Mapper接口上声明@Mapper
+  type-aliases-package: com.pp.wms.storage.domain     # 实体类所在包
+  mapper-locations: classpath:mybatis/mapper/*.xml    # mapper.xml所在目录
 
+#  spring.rabbitmq.host=localhost
+#  spring.rabbitmq.port=5672
+#  spring.rabbitmq.username=admin
+#  spring.rabbitmq.password=123456
+#  默认rabbitmq可以不做任何配置
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  #  Mapper接口的位置配置在启动类的@MapperScan()中，也可以分别在每个Mapper接口上声明@Mapper
 #  swagger界面的信息配置
 #swagger:
 #  api-info:
@@ -37,3 +52,17 @@ mybatis:
 #      name: pp
 #      url: www.pp.com
 #      email: pp@pp.com
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: *  # 暴露所有端点
+#        include: bus-env
+# 如果不暴露所有，则用下面的方式来配置
+#management:
+#  endpoint:
+#    env:
+#      enabled: true # 启用端点 env 所用的依赖是actuator
+#    web:
+#      exposure:
+#        include: env  # 暴露端点 env 配置多个,隔开

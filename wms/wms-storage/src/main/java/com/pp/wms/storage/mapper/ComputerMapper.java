@@ -1,6 +1,6 @@
 package com.pp.wms.storage.mapper;
 
-import com.pp.wms.storage.domain.Computer;
+import com.pp.wms.storage.domain.entity.Computer;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
@@ -20,7 +20,7 @@ public interface ComputerMapper {
     })
     List<Computer> getAll();
 
-    @Select("SELECT * FROM computer WHERE id = #{id}")
+    @Select("SELECT * FROM computer WHERE ISBN = #{ISBN}")
     @Results({
             @Result(column = "create_time", property = "createTime", javaType = Timestamp.class),
             @Result(column = "update_time", property = "updateTime", javaType = Timestamp.class),

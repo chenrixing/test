@@ -1,6 +1,6 @@
 package com.pp.wms.storage.service;
 
-import com.pp.wms.storage.domain.Computer;
+import com.pp.wms.storage.domain.entity.Computer;
 
 import java.util.List;
 
@@ -10,4 +10,6 @@ import java.util.List;
  */
 public interface ComputerService {
     List<Computer> getAll();
+
+    List<Computer> getAllComputers();
 }

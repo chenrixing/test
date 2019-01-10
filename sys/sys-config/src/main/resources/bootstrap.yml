@@ -1,5 +1,9 @@
 server:
   port: 8002
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${spring.cloud.client.ip-address}:8001/eureka/
 spring:
   application:
     name: sys-config
@@ -9,9 +13,13 @@ spring:
         git:
           uri: https://github.com/Hudic/Configuration/          # 存放了配置文件的仓库
           search-paths: PP                                      # 仓库下配置文件所处的文件夹
-          username:                                             # git仓库的账号
-          password:                                             # git仓库的密码
-eureka:
-  client:
-    service-url:
-      defaultZone: http://${spring.cloud.client.ip-address}:8001/eureka/
+          username:                                             # git仓库的账号 私有库需要填写
+          password:                                             # git仓库的密码 私有库需要填写
+management:
+  endpoints:
+    web:
+      exposure:
+        include: bus-refresh  # 此配置不可从云端获取，否则无法暴露端口(bus-refresh等)
+        # 发送post请求localhost:8002/actuator/bus-refresh即可对所有server client获取的配置进行更新
+
+

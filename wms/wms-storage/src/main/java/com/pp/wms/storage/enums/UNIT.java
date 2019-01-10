@@ -1,7 +1,7 @@
 package com.pp.wms.storage.enums;
 
 /**
- * PP
+ * 计价单位
  * Created by Makkah at 2019/1/8 11:20
  */
 public enum UNIT {
