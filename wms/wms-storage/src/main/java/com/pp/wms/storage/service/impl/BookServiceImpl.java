@@ -6,6 +6,7 @@ import com.pp.wms.storage.service.BookService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 /**
@@ -17,7 +18,33 @@ public class BookServiceImpl implements BookService {
     BookMapper bookMapper;
 
     @Override
-    public List<Book> listAll() {
+    public List<Book> selectAll() {
         return bookMapper.selectAll();
     }
+
+    @Override
+    public Book selectOne(String ISBN) {
+        return bookMapper.selectOne(ISBN);
+    }
+
+    @Override
+    public List<Book> selectLike(String ISBN, String title) {
+        return bookMapper.selectLike(ISBN, title);
+    }
+
+    @Override
+    public int insertOne(Book book) throws SQLIntegrityConstraintViolationException  {
+        return bookMapper.insertOne(book);
+    }
+
+    @Override
+    public int updateOne(Book book) {
+        return bookMapper.updateOne(book);
+    }
+
+    @Override
+    public int deleteOne(String ISBN) {
+        return bookMapper.deleteOne(ISBN);
+    }
+
 }

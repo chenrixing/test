@@ -2,28 +2,86 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pp.wms.storage.mapper.BookMapper">
     <resultMap id="baseResult" type="com.pp.wms.storage.domain.entity.Book">
-        <id column="ISBN" property="ISBN" jdbcType="VARCHAR"/>
-        <result column="title" jdbcType="VARCHAR" property="title"/>
-        <result column="author" jdbcType="VARCHAR" property="author"/>
-        <result column="press" jdbcType="VARCHAR" property="press"/>
-        <result column="publication_date" jdbcType="DATE" property="publicationDate"/>
-        <result column="edition" jdbcType="INTEGER" property="edition"/>
-        <result column="amount" jdbcType="INTEGER" property="amount"/>
-        <result column="price" jdbcType="DECIMAL" property="price"/>
-        <result column="unit" jdbcType="VARCHAR" property="unit"/>
-        <result column="create_time" jdbcType="DATE" property="createTime"/>
-        <result column="update_time" jdbcType="DATE" property="updateTime"/>
-        <result column="comment" jdbcType="VARCHAR" property="comment"/>
+        <id     column="ISBN"               jdbcType="VARCHAR"  property="ISBN"/>
+        <result column="title"              jdbcType="VARCHAR"  property="title"/>
+        <result column="author"             jdbcType="VARCHAR"  property="author"/>
+        <result column="press"              jdbcType="VARCHAR"  property="press"/>
+        <result column="publication_date"   jdbcType="DATE"     property="publicationDate"/>
+        <result column="edition"            jdbcType="INTEGER"  property="edition"/>
+        <result column="amount"             jdbcType="INTEGER"  property="amount"/>
+        <result column="price"              jdbcType="DECIMAL"  property="price"/>
+        <result column="unit"               jdbcType="VARCHAR"  property="unit"/>
+        <result column="create_time"        jdbcType="DATE"     property="createTime"/>
+        <result column="update_time"        jdbcType="DATE"     property="updateTime"/>
+        <result column="comment"            jdbcType="VARCHAR"  property="comment"/>
     </resultMap>
-
-    <!--<insert id="insert">-->
-    <!--insert into book(id, name, amount, price)-->
-    <!--values (#{id}, #{name}, #{number}, #{price});-->
-    <!--</insert>-->
-
+    <!--select-->
     <select id="selectAll" resultMap="baseResult">
         SELECT ISBN, title, author, press, publication_date, edition, amount, price, unit, create_time, update_time, comment
         FROM book
     </select>
 
+    <select id="selectOne"  parameterType="java.lang.String" resultMap="baseResult">
+        SELECT ISBN, title, author, press, publication_date, edition, amount, price, unit, create_time, update_time, comment
+        FROM book
+        WHERE ISBN = #{param1}
+    </select>
+
+    <select id="selectLike" resultMap="baseResult">
+        SELECT ISBN, title, author, press, publication_date, edition, amount, price, unit, create_time, update_time, comment
+        FROM book
+          <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="ISBN!=null and ISBN!=''">
+              AND ISBN LIKE "%${ISBN}%"
+            </if>
+            <if test="title!=null and title!=''">
+              AND title LIKE "%${title}%"
+            </if>
+          </trim>
+    </select>
+    <!--insert-->
+    <insert id="insertOne" parameterType="com.pp.wms.storage.domain.entity.Book">
+        insert into book(ISBN, title, author, press, publication_date, edition, amount, price, unit, comment)
+        values (#{ISBN}, #{title}, #{author}, #{press}, #{publicationDate}, #{edition}, #{amount}, #{price}, #{unit}, #{comment});
+    </insert>
+    <!--update-->
+    <update id="updateOne" parameterType="com.pp.wms.storage.domain.entity.Book">
+      <trim prefix="UPDATE book SET" suffixOverrides="," suffix="WHERE ISBN = #{book.ISBN}">
+        <if test="book.title!=null and book.title !=''">
+            title = book.title,
+        </if>
+        <if test="book.author!=null and book.author !=''">
+            author = book.author,
+        </if>
+        <if test="book.press!=null and book.press !=''">
+            press = book.press,
+        </if>
+        <if test="book.publicationDate!=null and book.publicationDate !=''">
+            publication_date = book.publicationDate,
+        </if>
+        <if test="book.edition!=null and book.edition !=''">
+            edition = book.edition,
+        </if>
+        <if test="book.amount!=null and book.amount !=''">
+            amount = book.amount,
+        </if>
+        <if test="book.price!=null and book.price !=''">
+            price = book.price,
+        </if>
+        <if test="book.unit!=null and book.unit !=''">
+            unit = book.unit,
+        </if>
+        <!--<if test="book.createTime!=null and book.createTime !=''">-->
+            <!--create_time = book.createTime,创建时间不可更改-->
+        <!--</if>-->
+#             update_time = now(),数据库字段设置ON UPDATE会自动更新
+        <if test="book.comment!=null and book.comment !=''">
+            comment = book.comment,
+        </if>
+      </trim>
+    </update>
+    <!--delete-->
+    <delete id="deleteOne" parameterType="java.lang.String">
+        DELETE FROM book WHERE ISBN=#{param1}
+    </delete>
 </mapper>

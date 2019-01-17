@@ -1,0 +1,30 @@
+server:
+  port: 8003
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${spring.cloud.client.ip-address}:8001/eureka/
+spring:
+  application:
+    name: sys-gateway
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: sys-config                        # config服务端在eureka中心的注册名
+      name: gateway                                   # 配置文件的前半部分(完整文件名类似Hudic-config-dev.properties)
+      profile: dev                                    # 配置文件的后半部分
+      label: master                                   # (云端)仓库的branch(分支)
+#    gateway:
+#      discovery:
+#        locator:
+#          enabled: true # 给已注册的eureka client创建默认路由，可以通过localhost:8003/{服务的注册名}/{接口} 来访问到其他服务
+#      routes:
+#        - id: pp_route
+#          uri: http://www.baidu.com
+#          predicates:
+#            - Path=/spring-cloud
+#        - id: pp_route1
+#          uri: http://www.baidu.com1
+#          predicates:
+#            - Path=/spring-cloud1

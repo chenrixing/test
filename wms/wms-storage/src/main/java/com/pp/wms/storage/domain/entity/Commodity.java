@@ -11,15 +11,15 @@ import java.sql.Timestamp;
  * Created by Makkah at 2019/1/8 11:16
  */
 public abstract class Commodity implements Serializable {
-    String id;              // 唯一识别,图书可设为ISBN码，其他商品可设为条码
+    String id;              // 唯一识别,图书可设为ISBN码，其他商品可设为条码？还是应理解为在本仓库的关键索引？
     String name;            // 名字，具体子类可通过getBookName()之类来做区分
     String unit;            // 计价单位：
     BigDecimal price;       // 单价
-    Integer amount;         // 量(数量或重量，以计价单位为参考)
+    Integer amount;         // 量(数量或重量，以计价单位为参考)，可是有的以整数，有的可以是小数(如kg)，则可以设定一个计价单位unit为xxkg/包、箱、袋？
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    Timestamp createTime;        // 创建时间
+    Timestamp createTime;   // 创建时间
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    Timestamp updateTime;        // 更新时间
+    Timestamp updateTime;   // 更新时间
     String comment;         // 备注
 
     public String getId() {

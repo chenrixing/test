@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.sql.Date;
 
 /**
- * PP
+ * 图书
  * Created by Makkah at 2019/1/9 14:24
  */
 
@@ -14,7 +14,7 @@ public class Book extends Commodity {
     private String title;           //书名，用父类的name替换即可
     private String author;          //作者
     private String press;           //出版社
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd") //前端增加数据时输入的日期格式也必须如此，否则会报解析错误
     private Date publicationDate;   //出版日期，设置日期可用String，注入数据库时用sql的to_date()函数
     private Integer edition;        //版次
 

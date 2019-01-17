@@ -20,6 +20,6 @@ management:
     web:
       exposure:
         include: bus-refresh  # 此配置不可从云端获取，否则无法暴露端口(bus-refresh等)
-        # 发送post请求localhost:8002/actuator/bus-refresh即可对所有server client获取的配置进行更新
+        # 发送post请求localhost:8002/actuator/bus-refresh即可对所有config client获取的配置进行更新
 
 

@@ -1,0 +1,28 @@
+server:
+  port: 8102
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${spring.cloud.client.ip-address}:8001/eureka/
+spring:
+  application:
+    name: test-authclient
+security:
+  oauth2:
+    client:
+      client-id: pig
+      client-secret: pigsecret
+      user-authorization-uri: http://localhost:8004/oauth/token
+      access-token-uri: http://localhost:8004/oauth/authorize
+    resource:
+      user-info-uri: http://localhost:8004/user
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: auth, token, user, client  # 此配置不可从云端获取，否则无法暴露端口(bus-refresh等)
+#    resource:
+#      jwt:
+#        key-uri: http://
+#      filter-order: 3
+#  sessions: never

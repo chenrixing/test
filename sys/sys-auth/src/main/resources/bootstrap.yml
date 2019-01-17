@@ -1,0 +1,48 @@
+server:
+  port: 8004
+#  servlet:
+#    context-path: /auth # 本模块的所有请求前加上/auth
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${spring.cloud.client.ip-address}:8001/eureka/
+spring:
+  application:
+    name: sys-auth
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: sys-config
+      name: mysql
+      profile: dev
+      label: master
+#  cloud:
+#    refresh:
+#      extra-refreshable: none
+#  redis:
+#    host: localhost
+#    database: 0
+#security:
+#  oauth2:
+#    client:
+#      client-id: pig
+#      client-secret: pigsecret
+#      user-authorization-uri: http://localhost:8004/oauth/token
+#      access-token-uri: http://localhost:8004/oauth/authorize
+#      authorized-grant-types: authorization_code, refresh_token, password
+#      scope: server
+#      auto-approve-scopes: '.*'
+#    resource:
+#      user-info-uri: http://localhost:8004/user
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: "*"  # 此配置不可从云端获取，否则无法暴露端口(bus-refresh等)
+#    resource:
+#      jwt:
+#        key-uri: http://
+#      filter-order: 3
+#  sessions: never
+

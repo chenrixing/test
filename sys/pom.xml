@@ -14,6 +14,9 @@
     <modules>
         <module>sys-eureka</module>
         <module>sys-config</module>
+        <module>sys-gateway</module>
+        <module>sys-auth</module>
+        <module>test-authclient</module>
     </modules>
 
 
