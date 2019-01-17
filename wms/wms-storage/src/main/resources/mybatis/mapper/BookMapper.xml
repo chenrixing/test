@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pp.wms.storage.mapper.BookMapper">
+    <resultMap id="baseResult" type="com.pp.wms.storage.domain.entity.Book">
+        <id column="ISBN" property="ISBN" jdbcType="VARCHAR"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="author" jdbcType="VARCHAR" property="author"/>
+        <result column="press" jdbcType="VARCHAR" property="press"/>
+        <result column="publication_date" jdbcType="DATE" property="publicationDate"/>
+        <result column="edition" jdbcType="INTEGER" property="edition"/>
+        <result column="amount" jdbcType="INTEGER" property="amount"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="unit" jdbcType="VARCHAR" property="unit"/>
+        <result column="create_time" jdbcType="DATE" property="createTime"/>
+        <result column="update_time" jdbcType="DATE" property="updateTime"/>
+        <result column="comment" jdbcType="VARCHAR" property="comment"/>
+    </resultMap>
+
+    <!--<insert id="insert">-->
+    <!--insert into book(id, name, amount, price)-->
+    <!--values (#{id}, #{name}, #{number}, #{price});-->
+    <!--</insert>-->
+
+    <select id="selectAll" resultMap="baseResult">
+        SELECT ISBN, title, author, press, publication_date, edition, amount, price, unit, create_time, update_time, comment
+        FROM book
+    </select>
+
+</mapper>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pp.wms.storage.mapper.ComputerMapper">
+    <resultMap id="computer" type="com.pp.wms.storage.domain.entity.Computer">
+        <id column="barcode" jdbcType="VARCHAR" property="barcode" javaType="String"/>
+        <result column="brand" jdbcType="VARCHAR" property="brand" javaType="String"/>
+        <result column="model" jdbcType="VARCHAR" property="model" javaType="String"/>
+        <result column="ram" jdbcType="VARCHAR" property="ram" javaType="String"/>
+        <result column="rom" jdbcType="VARCHAR" property="rom" javaType="String"/>
+        <result column="amount" jdbcType="INTEGER" property="amount" javaType="int"/>
+        <result column="price" jdbcType="DECIMAL" property="price" javaType="java.math.BigDecimal"/>
+        <result column="unit" jdbcType="VARCHAR" property="unit" javaType="String"/>
+        <result column="create_time" jdbcType="DATE" property="createTime" javaType="java.sql.Timestamp"/>
+        <result column="update_time" jdbcType="DATE" property="updateTime" javaType="java.sql.Timestamp"/>
+        <result column="comment" jdbcType="VARCHAR" property="comment" javaType="String"/>
+    </resultMap>
+    <!--<sql id="all_column">-->
+    <!--id,brand,ram,rom,amount,create_time,update_time,comment-->
+    <!--</sql>-->
+    <!--<sql id="sql_count">select count(*)</sql>-->
+    <select id="getAllComputers" resultMap="computer">
+        SELECT barcode, brand, model, RAM, ROM, amount, price, unit, create_time, update_time, comment
+        FROM computer
+        -- WHERE 1 = 1
+        <!--<if test="params.id != null or params.id != ''">-->
+        <!--AND id = ${params.id}-->
+        <!--</if>-->
+        <!--<if test="params.brand != null or params.brand != ''">-->
+        <!--AND brand LIKE '%${params.brand}%'-->
+        <!--</if>-->
+        <!--<if test="params.ram != null or params.ram != ''">-->
+        <!--AND ram &gt; ${params.ram}-->
+        <!--</if>-->
+        <!--<if test="params.rom != null or params.rom != ''">-->
+        <!--AND rom &gt; ${params.rom}-->
+        <!--</if>-->
+        <!--<if test="params.amount != null or params.amount != ''">-->
+        <!--AND amount &gt; ${params.amount}-->
+        <!--</if>-->
+        <!--<if test="params.comment != null or params.comment != ''">-->
+        <!--AND comment LIKE '%${params.comment}%'-->
+        <!--</if>-->
+    </select>
+</mapper>
