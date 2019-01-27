@@ -17,10 +17,3 @@ Spring Cloud：Finchley.RELEASE
 Spring Boot: 2.0.2.RELEASE  
 MySQL: 8
 JDBC: 8.0.13
-## 更新日志
-2019-01-17 test yo
-## Test
-1212121212  
-202020202
-15：44
-15：46

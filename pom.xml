@@ -8,6 +8,7 @@
         <module>wms</module>
         <module>crm</module>
         <module>erp</module>
+        <module>web</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

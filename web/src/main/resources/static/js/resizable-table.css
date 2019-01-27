@@ -1,0 +1,8 @@
+.resizable-table {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.resizable-table th, .resizable-table td {
+    border: 1px solid black;
+}

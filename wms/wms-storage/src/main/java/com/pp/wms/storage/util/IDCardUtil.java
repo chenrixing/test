@@ -64,4 +64,11 @@ public class IDCardUtil {
             return null;
         }
     }
+
+    public static void main(String[] args) {
+        IDCardUtil idCardUtil = IDCardUtil.getInstance();
+        for (int i = 0; i < 10; i++) {
+            System.out.println("" + idCardUtil.isLegal("44098119960921513" + i) + "-" + i);
+        }
+    }
 }
