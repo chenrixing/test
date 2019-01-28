@@ -3,24 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <title>Index</title>
-    <link href="../css/framework/bootstrap-4.2.1.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../layui/css/layui.css">
     <!--<style type="text/css">-->
-        <!--html, body {-->
-            <!--margin: 0;-->
-            <!--padding: 0;-->
-        <!--}-->
+    <!--html, body {-->
+    <!--margin: 0;-->
+    <!--padding: 0;-->
+    <!--}-->
     <!--</style>-->
 </head>
-<body ng-app="app" ui-view="app-view">
-<div class="row">
-    <div class="col col-lg-6" style="background: #1e7e34">1</div>
-    <div class="col col-lg-6" style="background: #005cbf">2</div>
-</div>
-
+<body>
+Hello
 </body>
-<script src="../js/framework/bootstrap-4.2.1.min.js" type="text/javascript"></script>
-<script src="../js/framework/angular-1.7.6.js" type="text/javascript"></script>
-<script src="../js/framework/angular-ui-router.min.js" type="text/javascript"></script>
-<script src="../js/framework/angular-ui-bootstrap-tpls.js" type="text/javascript"></script>
-<script src="../js/index.js" type="text/javascript"></script>
+<script type="text/javascript" src="../layui/layui.js"></script>
+<script type="text/javascript">
+    layui.link('../css/index.css'); // css路径相对于html页面，而不是相对于js文件 因为js最后是加载到html中？
+    layui.config({
+        base: '../js/modules/',      // 存放自定义modules的目录
+        response:{statusCode: 200}
+    });
+    // 调用自己的模块，用模块的文件名 function()内的参数是模块提供的接口，也就是模块exports输出的对象，多个参数使，顺序需要与use(['',''])的顺序一致
+    layui.use(['index'], function (test1) {
+        // var test2 = layui.index;
+        test1();
+    });
+    // layui.use(['layer', 'form', 'index'], function () {
+    //     var layer = layui.layer;
+    //     var form = layui.form;
+    //     layer.msg("Hello World!");
+    // });
+    layui.sessionData('test', {
+        key: 'username',
+        value: 'admin'
+    });
+    // layui.use(['layer'], function () {
+    //     layui.layer.msg(layui.device());
+    // })
+    console.log(layui.factory('index'));
+    layui.use('table', function () {
+        layui.table.exportFile(['名字', '性别', '年龄'], [
+            ['张三', '男', '20'],
+            ['李四', '女', '18'],
+            ['王五', '女', '19']
+        ], 'xls')
+    })
+
+</script>
 </html>

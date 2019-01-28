@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../layui/css/layui.css">
+</head>
+<body>
+<table id="list_table" class="layui-hide"></table>
+
+</body>
+<script type="text/javascript" src="../../layui/layui.js"></script>
+<script type="text/javascript">
+    // layui.config({
+    //     // base: '../js/modules/',      // 存放自定义modules的目录
+    //     response: {statusCode: 200}
+    // });
+    layui.use('table', function () {
+        var table = layui.table;
+        table.render({
+            /*如果返回的json状态名与layui的规范不一致，就需要自定义匹配*/
+            response: {
+                statusName: 'status',//layui默认是code、msg、count、data
+                // msgName: '自定义的参数名称' , // 对应 msg
+                // countName: '自定义的参数名称' , // 对应 count
+                // dataName: '自定义的参数名称', // 对应 data
+                statusCode: 200
+            },
+
+            elem: '#list_table',
+            url: 'http://172.16.60.94:8003/WMS-STORAGE/book',  // 填写获取数据的接口
+
+
+            // height: 312,
+            // celMinWidth: 80,    // 全局定义单元格最小宽度
+            cols: [[
+                {field: 'isbn', title: 'ISBN', align: 'center', sort: true},
+                {field: 'title', title: '书名', align: 'center', sort: true},
+                {field: 'author', title: '作者', align: 'center', sort: true, templet: '#authorTpl'},
+                {field: 'publicationDate', title: '出版日期', align: 'center', sort: true},
+                {field: 'price', title: '单价', align: 'center', sort: true},
+                {field: 'amount', title: '库存', align: 'center', sort: true},
+                {fixed: 'right', toolbar: '#crudToolbar'}   // 功能操作列(CRUD)
+            ]],
+            skin: 'row', // 表格风格    line （行边框风格） row （列边框风格） nob （无边框风格）['line', 'row']行列都加边框
+            even: true,  // 隔行变色
+            loading: true,   // 请求数据时显示loading
+            page: true, // 开启分页
+            limits: [3, 5, 10],    // 每页显示的可选数量
+            limit: 5,    // 每页显示的默认数量
+            /* 请求成功后的操作，res就是所请求到的json数据 */
+            done: function (res) {
+                console.log(res);
+            }
+        });
+    })
+</script>
+<!--templet单元格模板 ps:官方写法就是templet，不要写成template！-->
+<script type="text/html" id="authorTpl">
+    <a href="http://www.baidu.com" class="layui-table-link">{{d.author}}</a>
+</script>
+<!--toolbar功能操作列的单元格模板-->
+<script type="text/html" id="crudToolbar">
+    <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <!-- 这里同样支持 laytpl 语法，如： -->
+    {{#  if(d.author.length > 5){ }}
+    <a class="layui-btn layui-btn-xs" lay-event="check">审核</a>
+    {{#  } }}
+</script>
+</html>
