@@ -21,6 +21,12 @@
         FROM book
     </select>
 
+    <select id="select4Page" resultMap="baseResult">
+        SELECT ISBN, title, author, press, publication_date, edition, amount, price, unit, create_time, update_time, comment
+        FROM book
+        LIMIT ${(param1-1)*param2},${param2}
+    </select>
+
     <select id="selectOne"  parameterType="java.lang.String" resultMap="baseResult">
         SELECT ISBN, title, author, press, publication_date, edition, amount, price, unit, create_time, update_time, comment
         FROM book

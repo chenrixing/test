@@ -20,26 +20,53 @@ import java.util.Map;
 @RestController
 @RequestMapping("/book")
 public class BookController {
+    private final BookService bookService;
+
     @Autowired
-    BookService bookService;
+    public BookController(BookService bookService) {
+        this.bookService = bookService;
+    }
 
     /*查*/
+
+    // page和limit由layui table提交的分页参数名,page从1开始
     @GetMapping()
-    RestModel<List<Book>> list(@RequestParam(value = "ISBN", required = false) String ISBN, @RequestParam(value = "title", required = false) String title) {
+    RestModel<List<Book>> list(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "limit", required = false) Integer limit, @RequestParam(value = "ISBN", required = false) String ISBN, @RequestParam(value = "title", required = false) String title) {
         List<Book> books;
-//        if (ISBN.length() > 0 || title.length() > 0) {->NullPointerException
-        if (!StringUtils.isBlank(ISBN) || !StringUtils.isBlank(title)) {  //isEmpty只判断null和长度为0即空字符串，isBlank还会判断空格
-            books = bookService.selectLike(ISBN, title);
-        } else {
-            books = bookService.selectAll();
+        int count;  // 数据总数
+        if (!StringUtils.isBlank(ISBN) || !StringUtils.isBlank(title)) {  // 如果ISBN和title中有一个不为空    isEmpty只判断null和长度为0即空字符串，isBlank还会判断空格
+            count = bookService.selectCountLike(ISBN, title);
+            if (page != null && limit != null) {
+                books = bookService.select4PageLike(page, limit, ISBN, title);
+            } else {
+                books = bookService.selectLike(ISBN, title);
+            }
+        } else {    // 如果无查询条件，则查询全部
+            count = bookService.selectCount();
+            if (page != null && limit != null) {
+                books = bookService.select4Page(page, limit);
+            } else {
+                books = bookService.selectAll();
+            }
         }
-        return new RestModel<>(Status.SUCCESS.getCode(), "请求成功", books);
+//        count = books.size();   // 数据总数，此数据必须经过一次无分页参数的查询来得到->那不是很浪费资源吗?->简化数据总数的查询，单独查一次select count(*)
+//        if (page != null && limit != null) {
+//            if (!StringUtils.isBlank(ISBN) || !StringUtils.isBlank(title)) {  //isEmpty只判断null和长度为0即空字符串，isBlank还会判断空格
+//                books = bookService.select4PageLike(page, limit, ISBN, title);
+//            } else {
+//                books = bookService.select4Page(page, limit);
+//            }
+//        } else {
+//
+//        }
+//        if (ISBN.length() > 0 || title.length() > 0) {->NullPointerException
+        return new RestModel<>(Status.SUCCESS.getCode(), "请求成功", books, count);
     }
 
     @GetMapping("/{ISBN}")
     RestModel<Book> selectOne(@PathVariable("ISBN") String ISBN) {
         Book book = bookService.selectOne(ISBN);
-        return new RestModel<Book>(Status.SUCCESS.getCode(), "请求成功", book);
+        return book != null ? new RestModel<Book>(Status.SUCCESS.getCode(), "请求成功", book, 1) : new RestModel<Book>(Status.SUCCESS.getCode(), "无匹配的数据", null, 0);
     }
 
     /*增*/

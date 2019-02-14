@@ -18,6 +18,16 @@ public class BookServiceImpl implements BookService {
     BookMapper bookMapper;
 
     @Override
+    public int selectCount() {
+        return bookMapper.selectCount();
+    }
+
+    @Override
+    public int selectCountLike(String ISBN, String title) {
+        return bookMapper.selectCountLike(ISBN, title);
+    }
+
+    @Override
     public List<Book> selectAll() {
         return bookMapper.selectAll();
     }
@@ -33,7 +43,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public int insertOne(Book book) throws SQLIntegrityConstraintViolationException  {
+    public int insertOne(Book book) throws SQLIntegrityConstraintViolationException {
         return bookMapper.insertOne(book);
     }
 
@@ -45,6 +55,16 @@ public class BookServiceImpl implements BookService {
     @Override
     public int deleteOne(String ISBN) {
         return bookMapper.deleteOne(ISBN);
+    }
+
+    @Override
+    public List<Book> select4Page(int page, int limit) {
+        return bookMapper.select4Page(page, limit);
+    }
+
+    @Override
+    public List<Book> select4PageLike(int page, int limit, String ISBN, String title) {
+        return null;
     }
 
 }

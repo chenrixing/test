@@ -17,11 +17,28 @@ public class RestModel<T> implements Serializable {
     private String msg;
     @ApiModelProperty(value = "返回结果集")
     private T data;
+    @ApiModelProperty(value = "数据总数")
+    private int count;
+
+    public RestModel(int status, String msg, T data, int count) {
+        this.status = status;
+        this.msg = msg;
+        this.data = data;
+        this.count = count;
+    }
 
     public RestModel(int status, String msg, T data) {
         this.status = status;
         this.msg = msg;
         this.data = data;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 
     public int getStatus() {

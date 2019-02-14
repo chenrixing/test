@@ -1,8 +1,5 @@
 package com.pp.wms.storage.mapper;
 
-import com.pp.wms.storage.domain.entity.Book;
-import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
 
 /**
@@ -11,7 +8,11 @@ import java.util.List;
  * Created by Makkah at 2019/1/16 15:16
  */
 public interface Mapper<T, Index> {
+    int selectCount();
+
     List<T> selectAll();
+
+    List<T> select4Page(int page, int limit);
 
 //    List<T> selectLike(Index... indices);
 
